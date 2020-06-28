@@ -37,8 +37,29 @@ This can be launched from the command line in the standard way:
 
     java -jar path-to-jar/PDFBooklet-jar-with-dependencies.jar
 
-Using the GUI an Input PDF file can be selected and the booklet version 
+Using the GUI, an Input PDF file can be selected and the booklet version 
 generated as a new PDF.
+
+## Cloning and Running the GUI version
+
+The code has been structured as a standard Maven project which means you need 
+to have Maven and a JDK installed. A quick web search will help, but if not 
+https://maven.apache.org/install.html should guide you through the install.
+
+The following commands clone and generate an executable jar file in the 
+"target" directory:
+
+    git clone https://github.com/PhilLockett/PDFBooklet.git
+	cd PDFBooklet/
+    mvn clean install
+
+This jar file can be launched from the command line:
+
+    java -jar ./target/PDFBooklet-jar-with-dependencies.jar
+
+PDFBooklet can also be launched using a file explorer.
+ 
+The standard "mvn clean" command will remove all generated files.
 
 ## Bookbinding
 
@@ -67,34 +88,13 @@ is repeated for all groups of 4 pages in the source document.
 For a "Selection Size" of more than 1 sheet, more pages are grouped in 
 multiples of 4 and arranged in a similar, but more complex manner.
 
-## Cloning and Running
-
-The code has been structured as a standard Maven project which means you need 
-to have Maven and a JDK installed. A quick web search will help, but if not 
-https://maven.apache.org/install.html should guide you through the install.
-
-The following commands clone and generate an executable jar file in the 
-"target" directory:
-
-    git clone https://github.com/PhilLockett/PDFBooklet.git
-	cd PDFBooklet/
-    mvn clean install
-
-This jar file can be launched from the command line:
-
-    java -jar ./target/PDFBooklet-jar-with-dependencies.jar
-
-PDFBooklet can also be launched using a file explorer.
- 
-The standard "mvn clean" command will remove all generated files.
-
 ## Points of interest
 
 This code has the following points of interest:
 
   * PDFBooklet.java was developed as stand alone-code.
   * A user GUI was developed using NetBeans to make using PDFBooklet easier.
-  * The UserGui.form file, create by NetBeans is supplied.
+  * The NetBeans UserGui.form file is supplied to ease GUI design changes.
   * The code provides functions for rotating a BufferedImage +/- 90 degrees.
   * The PDF processing can be performed in the background using a SwingWorker.
   * Using a SwingWorker enables a JProgressBar to be supported by the GUI.
