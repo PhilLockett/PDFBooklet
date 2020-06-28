@@ -7,7 +7,8 @@ A simple, crude program to generate a booklet from of a PDF.
 PDFBooklet.java can be used as a standalone file or with the GUI front end 
 defined in UserGui.java. In both cases it is dependent on PDFbox. This project 
 has been set up as a Maven project which includes the GUI and uses Maven to 
-resolve the pdfbox dependency. 
+resolve the PDFbox dependency. This also means it can be built independent of 
+an IDE.
 
 ## Command line Usage
 
@@ -28,7 +29,7 @@ instantiates the class, sets the user selected attributes and then executes
 the generator in the background using a SwingWorker.
 
 Maven generates an executable jar file that contains pdfbox-app-2.x.x.jar and 
-is called:
+is named:
 
     PDFBooklet-jar-with-dependencies.jar
 
@@ -36,7 +37,7 @@ This can be launched from the command line in the standard way:
 
     java -jar path-to-jar/PDFBooklet-jar-with-dependencies.jar
 
-The Input PDF file can be selected using the GUI and the booklet version 
+Using the GUI an Input PDF file can be selected and the booklet version 
 generated as a new PDF.
 
 ## Bookbinding
@@ -76,13 +77,15 @@ The following commands clone and generate an executable jar file in the
 "target" directory:
 
     git clone https://github.com/PhilLockett/PDFBooklet.git
+	cd PDFBooklet/
     mvn clean install
 
-This jar file can be launched from the command line or by using a file 
-explorer:
+This jar file can be launched from the command line:
 
     java -jar ./target/PDFBooklet-jar-with-dependencies.jar
 
+PDFBooklet can also be launched using a file explorer.
+ 
 The standard "mvn clean" command will remove all generated files.
 
 ## Points of interest
