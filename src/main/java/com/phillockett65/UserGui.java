@@ -69,39 +69,19 @@ public class UserGui extends javax.swing.JFrame {
      * @return the corresponding PDRectangle value.
      */
     private PDRectangle getPS() {
-        PDRectangle PS = PDRectangle.LETTER;
-
         switch (pageSizejComboBox.getSelectedItem().toString()) {
-            case "A0":
-                PS = PDRectangle.A0;
-                break;
-            case "A1":
-                PS = PDRectangle.A1;
-                break;
-            case "A2":
-                PS = PDRectangle.A2;
-                break;
-            case "A3":
-                PS = PDRectangle.A3;
-                break;
-            case "A4":
-                PS = PDRectangle.A4;
-                break;
-            case "A5":
-                PS = PDRectangle.A5;
-                break;
-            case "A6":
-                PS = PDRectangle.A6;
-                break;
-            case "Legal":
-                PS = PDRectangle.LEGAL;
-                break;
-            case "Letter":
-                PS = PDRectangle.LETTER;
-                break;
+            case "A0":      return PDRectangle.A0;
+            case "A1":      return PDRectangle.A1;
+            case "A2":      return PDRectangle.A2;
+            case "A3":      return PDRectangle.A3;
+            case "A4":      return PDRectangle.A4;
+            case "A5":      return PDRectangle.A5;
+            case "A6":      return PDRectangle.A6;
+            case "Legal":   return PDRectangle.LEGAL;
+            case "Letter":  return PDRectangle.LETTER;
         }
 
-        return PS;
+        return PDRectangle.LETTER;
     }
 
     /**
@@ -122,24 +102,14 @@ public class UserGui extends javax.swing.JFrame {
      * @return the corresponding PDRectangle value.
      */
     private ImageType getIT() {
-        ImageType IT = ImageType.ARGB;
-
         switch (imageTypejComboBox.getSelectedItem().toString()) {
-            case "ARGB":
-                IT = ImageType.ARGB;
-                break;
-            case "Binary":
-                IT = ImageType.BINARY;
-                break;
-            case "Gray":
-                IT = ImageType.GRAY;
-                break;
-            case "RGB":
-                IT = ImageType.RGB;
-                break;
+            case "ARGB":    return ImageType.ARGB;
+            case "Binary":  return ImageType.BINARY;
+            case "Gray":    return ImageType.GRAY;
+            case "RGB":     return ImageType.RGB;
         }
 
-        return IT;
+        return ImageType.ARGB;
     }
 
     /**

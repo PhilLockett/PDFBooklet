@@ -23,14 +23,14 @@
  * booklet from of a source PDF document. It requires 2 parameters, the source
  * PDF and the name of the new PDF. However, it can be used as a java class, in
  * which case PDFBooklet.main() should be superseded.
- * 
+ *
  * Example usage:
  *  java -jar path-to-PDFBooklet.jar path-to-source.pdf path-to-new.pdf
- * 
+ *
  * Dependencies:
  *  PDFbox (pdfbox-app-2.0.19.jar)
  *  https://pdfbox.apache.org/download.cgi
- * 
+ *
  * Currently this code only supports a single sheet bifolium. In other words, a
  * single sheet containing 4 pages, 2 on each side. In this way, when the sheet
  * is folded in half a booklet is formed. For more information, see:
@@ -39,11 +39,11 @@
  *      booklet-layout-how-to-arrange-the-pages-of-a-saddle-stitched-booklet/
  *  https://www.studentbookbinding.co.uk/blog/
  *      how-to-set-up-pagination-section-sewn-bindings
- * 
+ *
  * The implementation is crude in that the source pages are captured as images
  * which are then rotated, scaled and arranged on the pages. As a result, the
  * generated document is significantly larger and grainier.
- * 
+ *
  * The document is processed in groups of 4 pages for each sheet of paper, where
  * each page is captured as a BufferedImage. The 4th page is rotated anti-
  * clockwise and scaled to fit on the bottom half of one side of the sheet. The
@@ -82,10 +82,13 @@ public class PDFBooklet {
     private int DPI = 300;         // Dots Per Inch
     private PDRectangle PS = PDRectangle.LETTER;
     private ImageType IT = ImageType.GRAY;
-    private static int sheetCount = 1;
+    private int sheetCount = 1;
+    private int firstPage = 0;
+    private int lastPage = 0;
 
     private final String sourcePDF;     // The source PDF filepath.
     private final String outputPDF;     // The generated PDF filepath.
+    private int MAX = 0;
 
     private PDDocument inputDoc;        // The source PDF document.
     private PDDocument outputDoc;       // The generated PDF document.
@@ -109,6 +112,19 @@ public class PDFBooklet {
     public PDFBooklet(String inPDF, String outPDF) {
         sourcePDF = inPDF;
         outputPDF = outPDF;
+
+        try {
+            inputDoc = PDDocument.load(new File(sourcePDF));
+            MAX = inputDoc.getNumberOfPages();
+            lastPage = MAX;
+
+            if (inputDoc != null) {
+                inputDoc.close();
+            }
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -127,7 +143,7 @@ public class PDFBooklet {
         }
     }
 
-    /* 
+    /*
      * PDFBooklet attribute setters.
      */
     public void setDotsPerInch(int val) {
@@ -146,6 +162,46 @@ public class PDFBooklet {
         sheetCount = count;
     }
 
+    public void setFirstPage(int page) {
+        if (page < 0) {
+            firstPage = 0;
+
+            return;
+        }
+
+        if (page > MAX)
+            page = MAX;
+
+        if (page > lastPage)
+            lastPage = page;
+
+        firstPage = page;
+    }
+
+    public void setLastPage(int page) {
+        if (page > MAX) {
+            lastPage = MAX;
+
+            return;
+        }
+
+        if (page < 0)
+            page = 0;
+
+        if (page < firstPage)
+            firstPage = page;
+
+        lastPage = page;
+    }
+
+    public int getFirstPage() {
+        return firstPage;
+    }
+
+    public int getLastPage() {
+        return lastPage;
+    }
+
     /**
      * Based on the SwingWorker example by "MadProgrammer" here:
      * https://stackoverflow.com/questions/18835835/jprogressbar-not-updating
@@ -157,11 +213,11 @@ public class PDFBooklet {
 
             try {
                 inputDoc = PDDocument.load(new File(sourcePDF));
-                final int MAX = inputDoc.getNumberOfPages();
 
                 try {
                     outputDoc = new PDDocument();
-                    for (int first = 0; first < MAX; first += 4 * sheetCount) {
+                    final int MAX = lastPage;
+                    for (int first = firstPage; first < MAX; first += 4 * sheetCount) {
                         int last = first + 4 * sheetCount;
                         if (last > MAX) {
                             last = MAX;
@@ -197,11 +253,11 @@ public class PDFBooklet {
     public void genBooklet() {
         try {
             inputDoc = PDDocument.load(new File(sourcePDF));
-            final int MAX = inputDoc.getNumberOfPages();
 
             try {
                 outputDoc = new PDDocument();
-                for (int first = 0; first < MAX; first += 4 * sheetCount) {
+                final int MAX = lastPage;
+                for (int first = firstPage; first < MAX; first += 4 * sheetCount) {
                     int last = first + 4 * sheetCount;
                     if (last > MAX) {
                         last = MAX;
@@ -291,24 +347,13 @@ public class PDFBooklet {
             // Draw images to current page.
             addNewPage();
             startNewStream();
-            if (flip) {
-                if (count > top) {
-                    image = flip(images[top], true);
-                    addImageToPdf(image, true);
-                }
-                if (count > bottom) {
-                    image = flip(images[bottom], true);
-                    addImageToPdf(image, false);
-                }
-            } else {
-                if (count > top) {
-                    image = flip(images[top], false);
-                    addImageToPdf(image, true);
-                }
-                if (count > bottom) {
-                    image = flip(images[bottom], false);
-                    addImageToPdf(image, false);
-                }
+            if (count > top) {
+                image = flip(images[top], flip);
+                addImageToPdf(image, true);
+            }
+            if (count > bottom) {
+                image = flip(images[bottom], flip);
+                addImageToPdf(image, false);
             }
             endStream();
 
