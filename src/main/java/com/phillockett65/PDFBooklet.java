@@ -291,24 +291,13 @@ public class PDFBooklet {
             // Draw images to current page.
             addNewPage();
             startNewStream();
-            if (flip) {
-                if (count > top) {
-                    image = flip(images[top], true);
-                    addImageToPdf(image, true);
-                }
-                if (count > bottom) {
-                    image = flip(images[bottom], true);
-                    addImageToPdf(image, false);
-                }
-            } else {
-                if (count > top) {
-                    image = flip(images[top], false);
-                    addImageToPdf(image, true);
-                }
-                if (count > bottom) {
-                    image = flip(images[bottom], false);
-                    addImageToPdf(image, false);
-                }
+            if (count > top) {
+                image = flip(images[top], flip);
+                addImageToPdf(image, true);
+            }
+            if (count > bottom) {
+                image = flip(images[bottom], flip);
+                addImageToPdf(image, false);
             }
             endStream();
 
