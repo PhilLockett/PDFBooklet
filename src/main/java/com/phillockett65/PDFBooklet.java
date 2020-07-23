@@ -85,6 +85,7 @@ public class PDFBooklet {
     private int sheetCount = 1;
     private int firstPage = 0;
     private int lastPage = 0;
+    private boolean rotate = true;      // Required?
 
     private final String sourcePDF;     // The source PDF filepath.
     private final String outputPDF;     // The generated PDF filepath.
@@ -101,7 +102,6 @@ public class PDFBooklet {
     // Calculate the Aspect Ratio of half the page (view port).
     private float VPAR;                 // View Port Aspect Ratio.
 
-    private static final boolean FLIP = true;         // Required?
 
     /**
      * Constructor.
@@ -200,6 +200,10 @@ public class PDFBooklet {
 
     public int getLastPage() {
         return lastPage;
+    }
+
+    public void setRotate(boolean flip) {
+        rotate = flip;
     }
 
     /**
@@ -325,7 +329,7 @@ public class PDFBooklet {
         int last = LAST - 1;
         for (int sheet = 0; sheet < sheetCount; ++sheet) {
             addImagesToPage(images, first++, last--, false);
-            addImagesToPage(images, first++, last--, FLIP);
+            addImagesToPage(images, first++, last--, rotate);
         }
     }
 
