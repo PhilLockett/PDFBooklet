@@ -92,7 +92,7 @@ multiples of 4 and arranged in a similar, but more complex manner.
 
 This code has the following points of interest:
 
-  * PDFBooklet.java was developed as stand alone-code.
+  * PDFBooklet.java was developed as stand-alone code.
   * A user GUI was developed using NetBeans to make using PDFBooklet easier.
   * The NetBeans UserGui.form file is supplied to ease GUI design changes.
   * The code provides functions for rotating a BufferedImage +/- 90 degrees.
