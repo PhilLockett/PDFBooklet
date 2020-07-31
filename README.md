@@ -1,4 +1,4 @@
-# PDFBooket
+# PDFBooklet
 
 A simple, crude program to generate a booklet from of a PDF.
 
