@@ -31,9 +31,8 @@
  *  PDFbox (pdfbox-app-2.0.19.jar)
  *  https://pdfbox.apache.org/download.cgi
  *
- * Currently this code only supports a single sheet bifolium. In other words, a
- * single sheet containing 4 pages, 2 on each side. In this way, when the sheet
- * is folded in half a booklet is formed. For more information, see:
+ * This code supports multi-sheet sections. For more information on bookbinding
+ * terms and techniques refer to:
  *  https://en.wikipedia.org/wiki/Bookbinding#Terms_and_techniques
  *  https://www.formaxprinting.com/blog/2016/11/
  *      booklet-layout-how-to-arrange-the-pages-of-a-saddle-stitched-booklet/
