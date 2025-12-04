@@ -4,6 +4,8 @@ A simple, crude program to generate a booklet from of a PDF. A booklet has two
 pages arranged side-by-side on both side of a sheet of paper such that the 
 sheet can be folded to produce a booklet.
 
+**USE AT OWN RISK.**
+
 ## Overview
 
 PDFBooklet.java can be used as a standalone file or with the GUI front end 
